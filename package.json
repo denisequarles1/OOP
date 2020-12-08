@@ -1,0 +1,30 @@
+{
+  "name": "Homework",
+  "version": "1.0.0",
+  "description": "OOP Homework",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --verbose test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denisequarles1/OOP"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denisequarles1/OOP"
+  },
+  "homepage": "https://github.com/denisequarles1/OOP",
+  "dependencies": {
+    "inquirer": "^6.3.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "jest": "^24.9.0"
+  }
+}
