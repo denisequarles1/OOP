@@ -1,12 +1,13 @@
 # OOP
 
+## Table of Contents
+* [Description](#description)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Tests](#tests)
+
 ## Description 
   Generates a webpage that displays a team's information for to quickly access information for each team member.
-
-  ## Table of Contents
-    * [Installation](#installation)
-    * [Usage](#usage)
-    * [Tests](#tests)
 
   ## Installation
   Run npm install to perform the installation
