@@ -1,70 +1,67 @@
-<<<<<<< HEAD
 // ===== Node Packages =====
 const inquirer = require("inquirer");
 const fs = require("fs");
-
-//Defines constant variables for Manager, Intern, and Engineer
-const Manager = require("./lib/manager");
-const Intern = require("./lib/intern");
-const Engineer = require("./lib/engineer");
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
 
 //Start Function
 async function start(){
-    console.log("Ready to begin setting up your team.");
+    console.log("We will create your team now!");
 
-    // Set Variable to hold HTML
+    // Sets Variable to hold HTML
     let teamHTML = "";
 
-    // Variable to hold the team size
+    // Variable to hold team size
     let teamSize;
 
-    // First question to determine the team size
+    // First Question to determine team size
     await inquirer.prompt(
         {
             type: "number",
-            message: "How many team members do you have?",
-            name: "numberofTeam"
+            message: "How many people are in your team?",
+            name: "noOfTeamMem"
         }
     )
     .then((data) => {
 
-        // Sets teamSize
-        teamSize = data.numberofTeam + 1;
+        //Sets teamsize
+        teamSize = data.noOfTeamMem + 1;
     });
     
-    // If Team Size is 0 , the program will end
+    // If Team Size is 0, program will end
     if (teamSize === 0){
-        console.log("No team members selected");
+        console.log("I guess there is no one on your team...");
         return;
     }
     
-    // Loop begins to ask questions based on the size of the team
+    // Loop begins to ask questions based on team size
     for(i = 1; i < teamSize; i++){
 
         // Global variables set
         let name;
         let id;
-        let email;
         let title;
+        let email;
 
         // Prompts user to answer the questions about the employee
         await inquirer.prompt([ 
             {
                 //Gets the employee's name
                 type: "input",
-                message: `What is employee (${i})'s first name?`,
+                message: `What is employee (${i})'s name?`,
                 name: "name"
             },
             {
-                //Gets the employee's ID
+                 //Gets the employee's ID
                 type: "input",
-                message: `What is the employee (${i})'s ID?`,
+                message: `What is the employee (${i})'s id?`,
                 name: "id"
             },
             {
                 //Gets the employee's email
                 type: "input",
-                message: `What is the employee (${i})'s email?`,
+                message: `What is the employee (${i})'s Email?`,
                 name: "email"
             },
             {
@@ -77,32 +74,32 @@ async function start(){
         ])
         .then((data) => {
 
-            // Takes data provided from the user and places the value in global variables
+            // Takes data from user and places value in global variables
             name = data.name;
             id = data.id;
-            email = data.email;
             title = data.title;
+            email = data.email;
         });
 
         // Switch Case depending on the title of the employee
         switch (title){
             case "Manager":
 
-                // Asks the user the Manager's Office Number
+                //  Asks the user the Manager's Office Number
                 await inquirer.prompt([
                     {
                         type: "input",
-                        message: "What is the Manager's Office number?",
-                        name: "officeNumber"
+                        message: "What is your Manager's Office Number?",
+                        name: "officeNo"
                     }
                 ])
-                .then((data) => 
-                {
-                    // Create a new manager object with the data provided by the user
-                    const manager = new Manager(name, id, email, data.officeNumber);
+                .then((data) => {
 
-                    // Reads and places HTML from manager.html in teamMemever Variable
-                    teamMember = fs.readFileSync("./templates/manager.html");
+                    // Create a new manager object with the data provided by the user
+                    const manager = new Manager(name, id, email, data.officeNo);
+
+                     // Reads and places HTML from manager.html in teamMemever Variable
+                    teamMember = fs.readFileSync("templates/manager.html");
 
                     // Adds the string to the team HTML
                     teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
@@ -114,7 +111,7 @@ async function start(){
                 await inquirer.prompt([
                     {
                         type: "input",
-                        message: "What school does the Intern attend?",
+                        message: "What school is your Intern attending?",
                         name: "school"
                     }
                 ])
@@ -122,7 +119,7 @@ async function start(){
                 // Create a new intern object with the data provided by the user
                 .then((data) => {
                     const intern = new Intern(name, id, email, data.school);
-                    teamMember = fs.readFileSync("./templates/intern.html");
+                    teamMember = fs.readFileSync("templates/intern.html");
                     teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
                 });
                 break;
@@ -132,203 +129,38 @@ async function start(){
                 await inquirer.prompt([
                     {
                         type: "input",
-                        message: "What is the Engineer's GitHub name?",
+                        message: "What is your Engineer's GitHub?",
                         name: "github"
                     }
                 ])
-
                  // Create a new Engineer object with the data provided by the user
                 .then((data) => {
                     const engineer = new Engineer(name, id, email, data.github);
-                    teamMember = fs.readFileSync("./templates/engineer.html");
+                    teamMember = fs.readFileSync("templates/engineer.html");
                     teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
                 });
                 break;
-        } 
 
-    }
+        } // End of Switch Case
+
+    } // End of For loop
 
     // Reads main.html and places html in a variable
-    const mainHTML = fs.readFileSync("./templates/main.html");
+    const mainHTML = fs.readFileSync("templates/main.html");
     
     // Use eval to implement template literals in main.html and places teamHTML inside main template
     teamHTML = eval('`'+ mainHTML +'`');
 
-    // write file to new team.html file
-    fs.writeFile("./output/team.html", teamHTML, function(err) {
+    // Writes file to new team.html file
+    fs.writeFile("output/team.html", teamHTML, function(err) {
 
         //Displays an error mesage if an error occurs
         if (err) {
           return console.log(err);
         }
+      
       });
 }
 
-=======
-// ===== Node Packages =====
-const inquirer = require("inquirer");
-const fs = require("fs");
 
-//Defines constant variables for Manager, Intern, and Engineer
-const Manager = require("./lib/manager");
-const Intern = require("./lib/intern");
-const Engineer = require("./lib/engineer");
-
-//Start Function
-async function start(){
-    console.log("Ready to begin setting up your team.");
-
-    // Set Variable to hold HTML
-    let teamHTML = "";
-
-    // Variable to hold the team size
-    let teamSize;
-
-    // First question to determine the team size
-    await inquirer.prompt(
-        {
-            type: "number",
-            message: "How many team members do you have?",
-            name: "numberofTeam"
-        }
-    )
-    .then((data) => {
-
-        // Sets teamSize
-        teamSize = data.numberofTeam + 1;
-    });
-    
-    // If Team Size is 0 , the program will end
-    if (teamSize === 0){
-        console.log("No team members selected");
-        return;
-    }
-    
-    // Loop begins to ask questions based on the size of the team
-    for(i = 1; i < teamSize; i++){
-
-        // Global variables set
-        let name;
-        let id;
-        let email;
-        let title;
-
-        // Prompts user to answer the questions about the employee
-        await inquirer.prompt([ 
-            {
-                //Gets the employee's name
-                type: "input",
-                message: `What is employee (${i})'s first name?`,
-                name: "name"
-            },
-            {
-                //Gets the employee's ID
-                type: "input",
-                message: `What is the employee (${i})'s ID?`,
-                name: "id"
-            },
-            {
-                //Gets the employee's email
-                type: "input",
-                message: `What is the employee (${i})'s email?`,
-                name: "email"
-            },
-            {
-                //Gets the employee's title
-                type: "list",
-                message: `what the employee (${i})'s title?`,
-                name: "title",
-                choices: ["Engineer", "Intern", "Manager"]
-            }
-        ])
-        .then((data) => {
-
-            // Takes data provided from the user and places the value in global variables
-            name = data.name;
-            id = data.id;
-            email = data.email;
-            title = data.title;
-        });
-
-        // Switch Case depending on the title of the employee
-        switch (title){
-            case "Manager":
-
-                // Asks the user the Manager's Office Number
-                await inquirer.prompt([
-                    {
-                        type: "input",
-                        message: "What is the Manager's Office number?",
-                        name: "officeNumber"
-                    }
-                ])
-                .then((data) => 
-                {
-                    // Create a new manager object with the data provided by the user
-                    const manager = new Manager(name, id, email, data.officeNumber);
-
-                    // Reads and places HTML from manager.html in teamMemever Variable
-                    teamMember = fs.readFileSync("./templates/manager.html");
-
-                    // Adds the string to the team HTML
-                    teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-                });
-                break;
-
-            //If the role is Intern, the intern's school needs to be provided
-            case "Intern":
-                await inquirer.prompt([
-                    {
-                        type: "input",
-                        message: "What school does the Intern attend?",
-                        name: "school"
-                    }
-                ])
-
-                // Create a new intern object with the data provided by the user
-                .then((data) => {
-                    const intern = new Intern(name, id, email, data.school);
-                    teamMember = fs.readFileSync("./templates/intern.html");
-                    teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-                });
-                break;
-
-            //If the role is Engineer, the engineer's GitHub name needs to be provided
-            case "Engineer":
-                await inquirer.prompt([
-                    {
-                        type: "input",
-                        message: "What is the Engineer's GitHub name?",
-                        name: "github"
-                    }
-                ])
-
-                 // Create a new Engineer object with the data provided by the user
-                .then((data) => {
-                    const engineer = new Engineer(name, id, email, data.github);
-                    teamMember = fs.readFileSync("./templates/engineer.html");
-                    teamHTML = teamHTML + "\n" + eval('`'+ teamMember +'`');
-                });
-                break;
-        } 
-
-    }
-
-    // Reads main.html and places html in a variable
-    const mainHTML = fs.readFileSync("./templates/main.html");
-    
-    // Use eval to implement template literals in main.html and places teamHTML inside main template
-    teamHTML = eval('`'+ mainHTML +'`');
-
-    // write file to new team.html file
-    fs.writeFile("./output/team.html", teamHTML, function(err) {
-
-        //Displays an error mesage if an error occurs
-        if (err) {
-          return console.log(err);
-        }
-      });
-}
-
->>>>>>> 866ee999730e044a84a7a324277cd1ff4ee9338d
 start();
